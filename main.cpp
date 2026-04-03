@@ -176,13 +176,32 @@ void Tidur(pet &p, aktivitas* &head) {
 
 int main() {
     pet myPet;
+    int pilih_jenis_pet;
     aktivitas* head = NULL;
 
     srand(time(0)); // Random poin awal pet
 
     cout << "====== PET SIMULATOR ======\n";
-    cout << "Masukan jenis pet: ";
-    cin >> myPet.jenis;
+    cout << "Masukan jenis pet: " << endl;
+    cout << "1. Kucing" << endl;
+    cout << "2. Hamster" << endl;
+    cout << "3. Kura-kura" << endl;
+    cout << "4. Kelinci" << endl;
+    cout << "5. Bunglon" << endl;
+    cout << "Pilihanmu: ";
+    cin >> pilih_jenis_pet;
+    if (pilih_jenis_pet == 1)
+        myPet.jenis = "Kucing";
+    else if (pilih_jenis_pet == 2)
+        myPet.jenis = "Hamster";
+    else if (pilih_jenis_pet == 3)
+        myPet.jenis = "Kura-kura";
+    else if (pilih_jenis_pet == 4)
+        myPet.jenis = "Kelinci";
+    else if (pilih_jenis_pet == 5)
+        myPet.jenis = "Bunglon";
+    else
+        cout << "Pilihan tidak valid\n";
     cout << "Masukan nama pet: ";
     cin >> myPet.nama_pet;
 
@@ -198,6 +217,9 @@ int main() {
     myPet.roti = 0;
 
     cout << "\nPet memiliki kondisi awal acak!\n";
+    cout << "Nama    : " << myPet.nama_pet << endl;
+    cout << "Jenis   : " << myPet.jenis << endl;
+
 
     int pilihan;
     bool jalan = true;
@@ -216,6 +238,8 @@ int main() {
         switch (pilihan) {
             case 1:
                 cout << "\n=== STATUS ===\n";
+                cout << "Nama    : " << myPet.nama_pet << endl;
+                cout << "Jenis   : " << myPet.jenis << endl;
                 cout << "Lapar   : " << myPet.lapar << endl;
                 cout << "Bahagia : " << myPet.bahagia << endl;
                 cout << "Energi  : " << myPet.energi << endl;
