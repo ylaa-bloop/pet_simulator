@@ -53,7 +53,7 @@ void BeliMakanan(pet &p, aktivitas* &head){
             TambahAktivitas(head, "Membeli daging");
         } else cout << "Koin tidak cukup!\n";
     }
-     else if (pilih == 3){
+    else if (pilih == 3){
         if (p.koin >= 7){
             p.koin -= 7;
             p.roti++;
@@ -77,6 +77,52 @@ void LihatAktivitas(aktivitas* &head){
     cout << "==============================" << endl;
 }
 
+// update
+void Makan(pet &p, aktivitas* &head){
+    int pilih;
+    cout << "=== PILIH MAKANAN ===";
+    cout << "1. Apel (stok: " << p.apel << ")";
+    cout << "2. Daging (stok: " << p.daging << ")";
+    cout << "3. Roti (stok: " << p.roti<< ")";
+    cout << "Pilih makanan: ";
+    cin >> pilih;
+
+    if (pilih == 1){
+        if (p.apel > 0){
+            p.apel--;
+            p.lapar -= 5;
+            TambahAktivitas(head, "Memberi apel");
+        }
+        else{
+            cout << "Apel habis!";
+        }
+    }
+    else if (pilih == 2){
+        if (p.daging > 0){
+            p.daging--;
+            p.lapar -= 15;
+            TambahAktivitas(head, "Memberi daging");
+        }
+        else {
+            cout << "Daging habis!";
+        }
+    }
+    else if (pilih == 3){
+        if (p.roti > 0){
+            p.roti--;
+            p.lapar -= 7;
+            TambahAktivitas(head, "Memberi roti");
+        }
+        else {
+            cout << "Roti habis!";
+        }
+    }
+    else {
+        cout << "Pilihan tidak valid!";
+    }
+
+    if (p.lapar < 0) p.lapar = 0;
+}
 
 int main() {
     pet myPet;
