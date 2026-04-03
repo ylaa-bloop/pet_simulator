@@ -173,7 +173,49 @@ void Tidur(pet &p, aktivitas* &head) {
         return; // Balik ke menu utama juga
     }
 }
+// fungsi Main
+void Main(pet &p, aktivitas* &head) {
+    int pilih;
 
+    cout << "\n=== PILIH AKTIVITAS MAIN ===\n";
+    cout << "1. Main bola (+15 bahagia, -10 energi)\n";
+    cout << "2. Jalan-jalan (+20 bahagia, -15 energi)\n";
+    cout << "3. Main sendiri (+10 bahagia, -5 energi)\n";
+    cout << "Pilihan: ";
+    cin >> pilih;
+
+    if (pilih == 1) {
+        p.bahagia += 15;
+        p.energi -= 10;
+        TambahAktivitas(head, "Main bola");
+    }
+    else if (pilih == 2) {
+        p.bahagia += 20;
+        p.energi -= 15;
+        TambahAktivitas(head, "Jalan-jalan");
+    }
+    else if (pilih == 3) {
+        p.bahagia += 10;
+        p.energi -= 5;
+        TambahAktivitas(head, "Main sendiri");
+    }
+    else {
+        cout << "Pilihan tidak valid!\n";
+        return;
+    }
+
+    // Efek tambahan
+    p.lapar += 5;
+
+    // Batas maksimum & minimum
+    if (p.bahagia > 100) p.bahagia = 100;
+    if (p.energi < 0) p.energi = 0;
+    if (p.lapar > 100) p.lapar = 100;
+
+    cout << p.nama_pet << " selesai bermain!\n";
+}
+
+// fitur Main
 int main() {
     pet myPet;
     int pilih_jenis_pet;
@@ -230,8 +272,9 @@ int main() {
         cout << "2. Makan\n";
         cout << "3. Beli Makanan\n";
         cout << "4. Tidur\n";
-        cout << "5. Lihat Aktivitas\n";
-        cout << "6. Keluar\n";
+        cout << "5. Main\n";
+        cout << "6. Lihat Aktivitas\n";
+        cout << "7. Keluar\n";
         cout << "Pilihan: ";
         cin >> pilihan;
 
@@ -259,10 +302,14 @@ int main() {
                 break;
 
             case 5:
-                LihatAktivitas(head);
+                Main(myPet, head);
                 break;
 
             case 6:
+                LihatAktivitas(head);
+                break;
+
+            case 7:
                 jalan = false;
                 cout << "Anda telah keluar dari game. Terima kasih telah memainkan Pet Simulator ^-^\n";
                 break;
