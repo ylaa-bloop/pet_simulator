@@ -39,8 +39,11 @@ void BeliMakanan(pet &p, aktivitas* &head){
     cout << "1. Apel (Harga: 5, Lapar -5)" << endl;
     cout << "2. Daging (Harga: 15, Lapar -15)" << endl;
     cout << "3. Roti (Harga: 7, Lapar: -10)" << endl;
+    cout << "4. Kembali" << endl;
     cout << "Pilih makanan yang ingin dibeli(masukkan angka): ";
     cin >> pilih;
+
+    if (pilih == 4) return;
 
     if (pilih == 1){
         if (p.koin >= 5){
@@ -103,8 +106,11 @@ void Makan(pet &p, aktivitas* &head){
     cout << "1. Apel (stok: " << p.apel << ")" << endl;
     cout << "2. Daging (stok: " << p.daging << ")" << endl;
     cout << "3. Roti (stok: " << p.roti<< ")" << endl;
+    cout << "4. Kembali" << endl;
     cout << "Pilih makanan: ";
     cin >> pilih;
+
+    if (pilih == 4) return;
 
     if (pilih == 1){
         if (p.apel > 0){
@@ -188,16 +194,25 @@ void Tidur(pet &p, aktivitas* &head) {
         return; // Balik ke menu utama juga
     }
 }
+
 // fungsi Main
 void Main(pet &p, aktivitas* &head) {
     int pilih;
+
+    if (p.energi <= 0) {
+    cout << p.nama_pet << " terlalu lelah untuk bermain!\n";
+    return;
+    }
 
     cout << "\n=== PILIH AKTIVITAS MAIN ===\n";
     cout << "1. Main bola (+15 koin, +15 bahagia, -10 energi)\n";
     cout << "2. Jalan-jalan (+20 koin, +20 bahagia, -15 energi)\n";
     cout << "3. Main sendiri (+10 koin, +10 bahagia, -5 energi)\n";
+    cout << "4. Kembali\n";
     cout << "Pilihan: ";
     cin >> pilih;
+
+    if (pilih == 4) return;
 
     if (pilih == 1) {
         p.koin += 15;
@@ -233,6 +248,72 @@ void Main(pet &p, aktivitas* &head) {
     cout << p.nama_pet << " selesai bermain!\n";
 }
 
+// Fungsi untuk update status pet setiap kali melakukan aktivitas
+void UpdateStatus(pet &p) {
+
+    // Lapar (naik tiap pilih menu kalau belum 0)
+    if (p.lapar > 0) {
+        p.lapar += 1;
+    }
+
+    // Energi (turun tiap pilih menu kalau belum 100)
+    if (p.energi < 100) {
+        p.energi -= 1;
+    }
+
+    // Bahagia (turun tiap pilih menu kalau belum 100)
+    if (p.bahagia < 100) {
+        p.bahagia -= 1;
+    }
+
+    // Batas
+    if (p.lapar > 100) p.lapar = 100;
+    if (p.energi < 0) p.energi = 0;
+    if (p.bahagia < 0) p.bahagia = 0;
+}
+
+void InisialisasiPetBaru(pet &p) {
+    int pilih_jenis_pet;
+
+    cout << "\n=== PILIH PET BARU ===\n";
+    cout << "1. Kucing\n";
+    cout << "2. Hamster\n";
+    cout << "3. Kura-kura\n";
+    cout << "4. Kelinci\n";
+    cout << "5. Bunglon\n";
+    cout << "Pilihanmu: ";
+    cin >> pilih_jenis_pet;
+
+    if (pilih_jenis_pet == 1)
+        p.jenis = "Kucing";
+    else if (pilih_jenis_pet == 2)
+        p.jenis = "Hamster";
+    else if (pilih_jenis_pet == 3)
+        p.jenis = "Kura-kura";
+    else if (pilih_jenis_pet == 4)
+        p.jenis = "Kelinci";
+    else if (pilih_jenis_pet == 5)
+        p.jenis = "Bunglon";
+    else
+        p.jenis = "Tidak diketahui";
+
+    cout << "Masukan nama pet: ";
+    cin >> p.nama_pet;
+
+    // Reset status (random lagi)
+    p.lapar = rand() % 21 + 40;
+    p.bahagia = rand() % 21 + 40;
+    p.energi = rand() % 21 + 40;
+
+    // Reset inventory
+    p.apel = 0;
+    p.daging = 0;
+    p.roti = 0;
+
+    cout << "Pet baru berhasil dibuat!\n";
+    cout << "Koin kamu tetap: " << p.koin << endl;
+}
+
 // fitur Main
 int main() {
     pet myPet;
@@ -250,6 +331,7 @@ int main() {
     cout << "5. Bunglon" << endl;
     cout << "Pilihanmu: ";
     cin >> pilih_jenis_pet;
+
     if (pilih_jenis_pet == 1)
         myPet.jenis = "Kucing";
     else if (pilih_jenis_pet == 2)
@@ -317,18 +399,22 @@ int main() {
 
             case 2:
                 Makan(myPet, head);
+                UpdateStatus(myPet);
                 break;
 
             case 3:
                 BeliMakanan(myPet, head);
+                UpdateStatus(myPet);
                 break;
 
             case 4:
                 Tidur(myPet, head);
+                UpdateStatus(myPet);
                 break;
 
             case 5:
                 Main(myPet, head);
+                UpdateStatus(myPet);
                 break;
 
             case 6:
@@ -350,14 +436,10 @@ int main() {
 
                         HapusAktivitas(head);
 
-                        int totalkoin = myPet.koin;
-                        myPet = {};
-                        myPet.koin = totalkoin;
-
-                        cout << "Anda dapat mulai merawat pet baru!" << endl;
+                        InisialisasiPetBaru(myPet);
                     }
                     else {
-                        cout << "Pet tetap dirawat, Lanjutkan rawat petmu dengan baik ya!" << endl;
+                        cout << "Pet tetap dirawat. Lanjutkan rawat pet-mu dengan baik ya!" << endl;
                     }
                 }
                 else {
