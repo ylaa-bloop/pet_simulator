@@ -81,6 +81,21 @@ void LihatAktivitas(aktivitas* &head){
     cout << "==============================" << endl;
 }
 
+// Delete riwayat aktivitas (jika status pet penuh)
+void HapusAktivitas(aktivitas* &head){
+    aktivitas* temp;
+    while (head != NULL){
+        temp = head; 
+        head = head->next;
+        delete temp;
+    }
+}
+
+// Cek apakah status pet sudah penuh (Lapar, Bahagia, energi)
+bool CekStatusPenuh(pet &p){
+    return (p. lapar <= 0 && p.bahagia >= 100 && p.energi >= 100);
+}
+
 // update
 void Makan(pet &p, aktivitas* &head){
     int pilih;
@@ -178,25 +193,28 @@ void Main(pet &p, aktivitas* &head) {
     int pilih;
 
     cout << "\n=== PILIH AKTIVITAS MAIN ===\n";
-    cout << "1. Main bola (+15 bahagia, -10 energi)\n";
-    cout << "2. Jalan-jalan (+20 bahagia, -15 energi)\n";
-    cout << "3. Main sendiri (+10 bahagia, -5 energi)\n";
+    cout << "1. Main bola (+15 koin, +15 bahagia, -10 energi)\n";
+    cout << "2. Jalan-jalan (+20 koin, +20 bahagia, -15 energi)\n";
+    cout << "3. Main sendiri (+10 koin, +10 bahagia, -5 energi)\n";
     cout << "Pilihan: ";
     cin >> pilih;
 
     if (pilih == 1) {
-        p.bahagia += 15;
+        p.koin += 15;
         p.energi -= 10;
+        p.bahagia +=10;
         TambahAktivitas(head, "Main bola");
     }
     else if (pilih == 2) {
-        p.bahagia += 20;
+        p.koin += 20;
         p.energi -= 15;
+        p.bahagia +=15;
         TambahAktivitas(head, "Jalan-jalan");
     }
     else if (pilih == 3) {
-        p.bahagia += 10;
+        p.koin += 10;
         p.energi -= 5;
+        p.bahagia +=10;
         TambahAktivitas(head, "Main sendiri");
     }
     else {
@@ -274,9 +292,17 @@ int main() {
         cout << "4. Tidur\n";
         cout << "5. Main\n";
         cout << "6. Lihat Aktivitas\n";
+
+    if (CekStatusPenuh(myPet)) {
+        cout << "7. Lepas ke alam bebas (Pet dalam keadaan terbaik!)\n";
+        cout << "8. Keluar\n";
+    }
+    else {
         cout << "7. Keluar\n";
-        cout << "Pilihan: ";
-        cin >> pilihan;
+    }
+
+    cout << "Pilihan: ";
+    cin >> pilihan;
 
         switch (pilihan) {
             case 1:
@@ -310,9 +336,40 @@ int main() {
                 break;
 
             case 7:
-                jalan = false;
-                cout << "Anda telah keluar dari game. Terima kasih telah memainkan Pet Simulator ^-^\n";
+                if (CekStatusPenuh(myPet)){
+                    char konfirmasi;
+                    cout << "\nStatus pet sudah penuh, Apakah anda ingin melepas pet ke alam bebas? (y/n): ";
+                    cin >> konfirmasi;
+
+                    if (konfirmasi == 'y' || konfirmasi == 'Y'){
+                        int reward = 50;
+                        myPet.koin += reward;
+
+                        cout << "Pet berhasil dilepaskan ke alam bebas!" << endl;
+                        cout << "Anda mendapatkan reward sebanyak " << reward << " Koin!" << endl;
+
+                        HapusAktivitas(head);
+
+                        int totalkoin = myPet.koin;
+                        myPet = {};
+                        myPet.koin = totalkoin;
+
+                        cout << "Anda dapat mulai merawat pet baru!" << endl;
+                    }
+                    else {
+                        cout << "Pet tetap dirawat, Lanjutkan rawat petmu dengan baik ya!" << endl;
+                    }
+                }
+                else {
+                    jalan = false;
+                    cout << "Anda telah keluar dari game. Terima kasih telah memainkan Pet Simulator ^-^\n";
+                }
                 break;
+
+            case 8: 
+            jalan = false;
+            cout << "Anda telah keluar dari game. Terima kasih telah memainkan Pet Simulator ^-^\n";
+            break;
 
             default:
                 cout << "Pilihan tidak valid!\n";
