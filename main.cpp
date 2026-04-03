@@ -35,10 +35,10 @@ head = baru;
 void BeliMakanan(pet &p, aktivitas* &head){
     int pilih;
 
-    cout << "=== TOKO MAKANAN ===";
-    cout << "1. Apel (Harga: 5, Lapar -5)";
-    cout << "2. Daging (Harga: 15, Lapar -15)";
-    cout << "3. Roti (Harga: 7, Lapar: -10)";
+    cout << "=== TOKO MAKANAN ===" << endl;
+    cout << "1. Apel (Harga: 5, Lapar -5)" << endl;
+    cout << "2. Daging (Harga: 15, Lapar -15)" << endl;
+    cout << "3. Roti (Harga: 7, Lapar: -10)" << endl;
     cout << "Pilih makanan yang ingin dibeli(masukkan angka): ";
     cin >> pilih;
 
@@ -84,10 +84,10 @@ void LihatAktivitas(aktivitas* &head){
 // update
 void Makan(pet &p, aktivitas* &head){
     int pilih;
-    cout << "=== PILIH MAKANAN ===";
-    cout << "1. Apel (stok: " << p.apel << ")";
-    cout << "2. Daging (stok: " << p.daging << ")";
-    cout << "3. Roti (stok: " << p.roti<< ")";
+    cout << "=== PILIH MAKANAN ===" << endl;
+    cout << "1. Apel (stok: " << p.apel << ")" << endl;
+    cout << "2. Daging (stok: " << p.daging << ")" << endl;
+    cout << "3. Roti (stok: " << p.roti<< ")" << endl;
     cout << "Pilih makanan: ";
     cin >> pilih;
 
