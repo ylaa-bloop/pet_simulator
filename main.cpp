@@ -254,16 +254,21 @@ void Main(pet &p, aktivitas* &head) {
     }
 
     cout << "\n=== PILIH AKTIVITAS MAIN ===\n";
+    cout << "Energi saat ini: " << p.energi << endl;
     cout << "1. Main bola (+15 koin, +15 bahagia, -10 energi)\n";
     cout << "2. Jalan-jalan (+20 koin, +20 bahagia, -15 energi)\n";
     cout << "3. Main lompat tinggi (+10 koin, +10 bahagia, -5 energi)\n";
     cout << "4. Kembali\n";
     cout << "Pilihan: ";
-    pilih = ValidasiInput(1,4, "Pilihan: ");
+    cin >> pilih;
 
     if (pilih == 4) return;
 
     if (pilih == 1) {
+        if (p.energi < 10) {
+            cout << p.nama_pet << " terlalu lelah untuk bermain bola!\n";
+            return;
+        }
         p.koin += 15;
         p.energi -= 10;
         p.bahagia +=10;
@@ -273,6 +278,10 @@ void Main(pet &p, aktivitas* &head) {
         cout << "Koin sekarang      : " << p.koin << endl;
     }
     else if (pilih == 2) {
+        if (p.energi < 15) {
+            cout << p.nama_pet << " terlalu lelah untuk jalan-jalan!\n";
+            return;
+        }
         p.koin += 20;
         p.energi -= 15;
         p.bahagia +=15;
@@ -282,6 +291,10 @@ void Main(pet &p, aktivitas* &head) {
         cout << "Koin sekarang      : " << p.koin << endl;
     }
     else if (pilih == 3) {
+        if (p.energi < 5) {
+            cout << p.nama_pet << " terlalu lelah untuk main lompat tinggi!\n";
+            return;
+        }
         p.koin += 10;
         p.energi -= 5;
         p.bahagia +=10;
@@ -380,7 +393,7 @@ int main() {
 
     srand(time(0)); // Random poin awal pet
 
-    cout << "====== \U0001F3AE PET SIMULATOR ======\n";
+    cout << "====== \U0001F3AE PawPal ======\n";
 
     cout << "Masukan jenis pet: " << endl;
     cout << "1. Kucing" << endl;
@@ -428,7 +441,7 @@ int main() {
 
     while (jalan) {
         cout << "\n=================================\n";
-        cout << "         \U0001F3AE PET SIMULATOR        \n";
+        cout << "         \U0001F3AE PawPal        \n";
         cout << "=================================\n";
         cout << "1. \U0001F4CA Lihat Status\n";
         cout << "2. \U0001F37D  Makan\n";
@@ -514,7 +527,7 @@ int main() {
 
             case 8: 
             jalan = false;
-            cout << "Anda telah keluar dari game. Terima kasih telah memainkan Pet Simulator ^-^\n";
+            cout << "Anda telah keluar dari game. Terima kasih telah memainkan PawPal ^-^\n";
             break;
 
             default:
