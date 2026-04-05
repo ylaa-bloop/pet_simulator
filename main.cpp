@@ -260,7 +260,7 @@ void Main(pet &p, aktivitas* &head) {
     cout << "3. Main lompat tinggi (+10 koin, +10 bahagia, -5 energi)\n";
     cout << "4. Kembali\n";
     cout << "Pilihan: ";
-    cin >> pilih;
+    pilih = ValidasiInput(1, 4, "Pilih makanan: ");
 
     if (pilih == 4) return;
 
