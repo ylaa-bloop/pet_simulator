@@ -24,6 +24,26 @@ struct aktivitas{
     aktivitas* next;
 };
 
+int ValidasiInput(int min, int max, string pesan) {
+    int input;
+    while (true) {
+        cout << pesan;
+        cin >> input;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Pilihan tidak valid! Input harus berupa angka! \n";
+        }
+        else if (input < min || input > max) {
+            cout << "Pilihan tidak valid! \n";
+        }
+        else{
+            return input;
+        }
+    }
+}
+
 // Create
 void TambahAktivitas(aktivitas* &head, string keterangan){
 aktivitas* baru = new aktivitas;
@@ -41,7 +61,7 @@ void BeliMakanan(pet &p, aktivitas* &head){
     cout << "3. Roti (Harga: 7, Lapar: -10)" << endl;
     cout << "4. Kembali" << endl;
     cout << "Pilih makanan yang ingin dibeli(masukkan angka): ";
-    cin >> pilih;
+    pilih = ValidasiInput(1,4, "Pilih makanan yang ingin dibeli(masukkan angka): ");
 
     if (pilih == 4) return;
 
@@ -132,7 +152,7 @@ void Makan(pet &p, aktivitas* &head){
     cout << "3. \U0001F35E Roti     (stok: " << p.roti<< ")" << endl;
     cout << "4. Kembali" << endl;
     cout << "Pilih makanan: ";
-    cin >> pilih;
+    pilih = ValidasiInput(1, 4, "Pilih makanan: ");
 
 
     if (pilih == 4) return;
@@ -191,7 +211,7 @@ void Tidur(pet &p, aktivitas* &head) {
         cout << "3. 15 detik (50 energi)\n";
         cout << "4. Kembali\n";
         cout << "Pilihan: ";
-        cin >> pilih;
+        pilih = ValidasiInput(1, 4, "Pilihan: ");
 
         int durasi = 0, energi_dapat = 0;
 
@@ -239,7 +259,7 @@ void Main(pet &p, aktivitas* &head) {
     cout << "3. Main lompat tinggi (+10 koin, +10 bahagia, -5 energi)\n";
     cout << "4. Kembali\n";
     cout << "Pilihan: ";
-    cin >> pilih;
+    pilih = ValidasiInput(1,4, "Pilihan: ");
 
     if (pilih == 4) return;
 
@@ -361,6 +381,7 @@ int main() {
     srand(time(0)); // Random poin awal pet
 
     cout << "====== \U0001F3AE PET SIMULATOR ======\n";
+
     cout << "Masukan jenis pet: " << endl;
     cout << "1. Kucing" << endl;
     cout << "2. Hamster" << endl;
@@ -368,7 +389,7 @@ int main() {
     cout << "4. Kelinci" << endl;
     cout << "5. Bunglon" << endl;
     cout << "Pilihanmu: ";
-    cin >> pilih_jenis_pet;
+    pilih_jenis_pet = ValidasiInput(1,5, "Pilihanmu: ");
 
     if (pilih_jenis_pet == 1)
         myPet.jenis = "Kucing";
